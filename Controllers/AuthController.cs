@@ -50,21 +50,28 @@ namespace WeightLossTracker.Controllers
         
             // Optionally, generate a token for the new user
             var secretKey = _configuration["JwtConfig:Secret"];
-            var token = secretKey != null ? JwtTokenGenerator.GenerateToken(user.Username, secretKey) : null;
+            var token = secretKey != null ? JwtTokenGenerator.GenerateToken(user.Username, secretKey!) : JwtTokenGenerator.GenerateToken(user.Username, string.Empty);
         
             return Ok(new { Message = "User registered successfully", Token = token });
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserModel user)
+        public async Task<IActionResult> Login([FromBody] UserModel user)
         {
-            if (user.Username == "test" && user.Password == "password")
+            // Check if the user exists and the password is correct
+            var existingUser = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == user.Username);
+
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, existingUser.PasswordHash))
             {
-                var secretKey = _configuration["JwtConfig:Secret"];
-                var token = secretKey != null ? JwtTokenGenerator.GenerateToken(user.Username, secretKey) : null;
-                return Ok(new { Token = token });
+                return BadRequest(new { Message = "Username or password is incorrect." });
             }
-            return Unauthorized();
+
+            // Generate a token for the user
+            var secretKey = _configuration["JwtConfig:Secret"];
+            var token = secretKey != null ? JwtTokenGenerator.GenerateToken(user.Username, secretKey) : JwtTokenGenerator.GenerateToken(user.Username, string.Empty);
+
+            return Ok(new { Token = token });
         }
     }
 
