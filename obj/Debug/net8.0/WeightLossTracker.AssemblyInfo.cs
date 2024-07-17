@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeightLossTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e38e4bcd44ed5232cec14c7564bc1fe4cf8daf1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+454642319b410177bab0c77c417dcb2552b4bff0")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeightLossTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeightLossTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

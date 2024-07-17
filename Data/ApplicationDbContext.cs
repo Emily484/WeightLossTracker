@@ -4,6 +4,7 @@ public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<WeightEntry> WeightEntries { get; set; }
+    public DbSet<Goal> Goals { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
